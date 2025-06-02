@@ -10,6 +10,9 @@ public class RegularySpawn : MonoBehaviour
     [SerializeField] private float delayBetweenSteps = 0.1f;
     [SerializeField] private float volume = 1f;
 
+    [Header("Timing Settings")]
+    [SerializeField] private float startDelay = 0f; // через сколько секунд запускать звук
+
     private AudioSource audioSource;
 
     private void Start()
@@ -19,6 +22,15 @@ public class RegularySpawn : MonoBehaviour
         {
             Debug.LogWarning("AudioSource не найден на объекте, а RTST выключен. Ѕудет ошибка.");
         }
+
+        StartCoroutine(DelayedStart());
+    }
+
+    private IEnumerator DelayedStart()
+    {
+        // ∆дЄм перед запуском
+        if (startDelay > 0f)
+            yield return new WaitForSeconds(startDelay);
 
         StartCoroutine(StepLoop());
     }

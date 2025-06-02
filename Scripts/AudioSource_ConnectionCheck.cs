@@ -27,6 +27,8 @@ public class AudioSource_ConnectionCheck : MonoBehaviour
         // Можно сразу стартануть с фильтрами, если они были назначены
     }
 
+
+
     private void Update()
     {
         if (player == null) return;
@@ -49,6 +51,11 @@ public class AudioSource_ConnectionCheck : MonoBehaviour
     public void SetMuffle(bool m)
     {
         isMuffled = m;
+    }
+
+    public void SetUpdated()
+    {
+        updated = 2;
     }
 
     public void SetAttenuationThroughWall(float attenuationThroughWall_OG)

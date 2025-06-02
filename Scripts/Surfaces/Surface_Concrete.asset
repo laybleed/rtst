@@ -16,6 +16,6 @@ MonoBehaviour:
   reflectionCoefficient: 1
   absorptionCoefficient: 0.007
   penetrationResistance: 50
-  pitchModifier: 0.89
+  pitchModifier: 1.1
   reverbTail: 1.2
-  lowPassCutoff: 5267
+  lowPassCutoff: 23949

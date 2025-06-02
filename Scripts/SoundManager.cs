@@ -423,6 +423,10 @@ public class SoundManager : MonoBehaviour
         float distance = toPlayer.magnitude;
         float betaTemp = 5e-3f;
 
+        var connectionCheck = soundObject.GetComponentInChildren<AudioSource_ConnectionCheck>();
+        connectionCheck.SetUpdated();
+        connectionCheck.SetMuffle(false);
+
         // Проверка прямой видимости (только для немафленных)
         if (!isMuffled && Physics.Raycast(position, toPlayer.normalized, distance, reflectionMask))
         {
@@ -442,14 +446,17 @@ public class SoundManager : MonoBehaviour
             finalMaxDistance = -Mathf.Log(0.01f / predictedVolume) / betaTemp;
         }
 
+
+
         // Обработка маффлинга
         if (isMuffled)
         {
             volume *= 0.5f;
-            var connectionCheck = soundObject.GetComponentInChildren<AudioSource_ConnectionCheck>();
+           // var connectionCheck = soundObject.GetComponentInChildren<AudioSource_ConnectionCheck>();
             if (connectionCheck != null)
             {
                 connectionCheck.SetMuffle(true);
+                //connectionCheck.SetUpdated();
                 connectionCheck.SetAttenuationThroughWall(attenuationThroughWall);
             }
         }
@@ -501,8 +508,17 @@ public class SoundManager : MonoBehaviour
         AudioLowPassFilter lowPass = source.gameObject.AddComponent<AudioLowPassFilter>();
         AudioHighPassFilter highPass = source.gameObject.AddComponent<AudioHighPassFilter>();
 
+        //// m = плотность * толщина (кг/м2)
+        //float m = materialDensity * thicknessMeters;
+
+        //// TLtarget — целевое затухание в децибелах (12 дБ)
+        //float TLtarget = 12.0f;
+
+        //// fc = частота среза (в Гц)
+        //float fc = Mathf.Pow(10f, (TLtarget + 47f) / 20f) / m;
+
         lowPass.cutoffFrequency = material.lowPassCutoff;
-        highPass.cutoffFrequency = 500f; // Фиксированное значение для среза низких частот
+        highPass.cutoffFrequency = 2f; // Фиксированное значение для среза низких частот
 
         source.pitch *= material.pitchModifier; // Изменяем питч звука
         UnityEngine.Debug.Log("Sound Pitched!!!");

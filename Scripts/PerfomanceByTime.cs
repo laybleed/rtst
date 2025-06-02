@@ -17,11 +17,10 @@ public class PrfomanceByTime : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (timer >= logInterval)
-        {
+     
             string line = $"{Time.time:F3}\t{Time.deltaTime:F6}";
             File.AppendAllText(filePath, line + "\n");
             timer = 0f;
-        }
+        
     }
 }
